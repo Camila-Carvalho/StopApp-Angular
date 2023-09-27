@@ -1,0 +1,84 @@
+* {
+    font-family: var(--bs-font-sans-serif);
+}
+
+.nav-stop{
+    background-color: rgb(255, 123, 0);
+    box-shadow: 0 2px 8px rgb(255, 202, 153);
+}
+
+.nav-stop h2 {
+    margin-left: 20%;
+    color: #f8f9fa;
+}
+
+.btn-start-game {
+    margin-top: 10px;
+    background-color:rgb(255, 123, 0);
+    color: #f8f9fa;
+}
+
+.btn-start-game:hover {
+    margin-top: 10px;
+    background-color:rgb(255, 94, 0);
+    color: #f8f9fa;
+}
+
+.jumbotron{
+    background:#f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #9b9b9b;
+    min-width: 320px;
+    position: fixed;
+    left: 50%;
+    padding: 24px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.link-sala {
+    color: black;
+    text-decoration: none;
+}
+
+.link-sala:hover {
+    color: rgb(255, 94, 0);
+}
+
+.input-stop{
+    margin: 2px;
+}
+
+.form-control:focus{
+    border-color: rgb(255, 123, 0);
+    box-shadow: 0 2px 8px rgb(255, 202, 153);
+}
+
+.footer-stop{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: rgb(255, 123, 0);
+    box-shadow: 0 -2px 8px rgb(255, 202, 153);
+    color: #f8f9fa;
+}
+
+.form{
+    all: initial;
+}
+
+.coluna-categoria{
+    background:#f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 1px 5px #9b9b9b;
+    padding: 20px;
+    margin: 5px;
+}
+
+.form .btn-stop{
+    width: 50%;
+    color: #f8f9fa;
+    background-color: red;
+}
