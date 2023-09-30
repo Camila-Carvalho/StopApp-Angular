@@ -6,30 +6,34 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
-import { ConfiguracaoComponent } from './configuracao/configuracao.component';
+import { ConfiguracaoSalaComponent } from './sala/configuracao-sala.component';
 import { JogoComponent } from './jogo/jogo.component';
 import { WebsocketService } from './services/websocket.service';
-import { ConfiguracaoService } from './configuracao/configuracao.service';
+import { ConfiguracaoSalaService } from './sala/configuracao-sala.service';
 import { JogoService } from './jogo/jogo.service';
+import { SessionService } from './services/session.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ConfiguracaoComponent,
+    ConfiguracaoSalaComponent,
     JogoComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    HttpClientModule,
     RouterModule.forRoot(ROUTES)
   ],
   exports:[
     RouterModule
   ],
   providers: [
-    ConfiguracaoService,
+    ConfiguracaoSalaService,
     JogoService,
-    WebsocketService
+    WebsocketService,
+    SessionService
   ],
   bootstrap: [AppComponent]
 })

@@ -1,32 +1,20 @@
 <div class="form">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria">
-                Nome
-                <hr>
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 coluna-categoria">
-                CEP (Cidade/Estado/País)
-                <hr>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria">
-                Fruta
-                <hr>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria">
-                Animal
-                <hr>
-            </div>
-            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria">
-                MSE
-                <hr>
+    <div class="row align-items-center">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 letra-partida-size-circle letra-partida-circle">
+            <h1>{{letraPartida}}</h1>
+        </div>
+    </div>
+    <div class="row align-items-center">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria" *ngFor="let categoria of jogo.categorias">
+            {{categoria.nome}}
+            <hr>
+            <div *ngFor="let partida of categoria.partidas">
+                <input class="form-control input-stop" [value]="partida.resposta" [readOnly]="partida.finalizada" required>
             </div>
         </div>
     </div>
-    <div class="container">
-        <div class="row align-items-center">
-            <button type="button" class="btn btn-stop">STOP</button>
-        </div>
+    <div class="row align-items-center">
+        <button type="button" class="btn btn-stop">STOP</button>
     </div>
 </div>
 

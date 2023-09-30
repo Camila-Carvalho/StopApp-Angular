@@ -82,3 +82,31 @@
     color: #f8f9fa;
     background-color: red;
 }
+
+.align-items-center {
+    display: flex;
+    justify-content: center;
+}
+
+.letra-partida-size-circle {
+    margin: 5px;
+    height: 60px;
+    width:60px;
+}
+
+.letra-partida-circle {
+    background: red;
+    color: #fff;
+    border-radius: 50%;
+   
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+	-ms-flex-align: center;
+	align-items: center;
+    
+    justify-content: center;
+}
