@@ -9,12 +9,12 @@
             {{categoria.nome}}
             <hr>
             <div *ngFor="let partida of categoria.partidas">
-                <input class="form-control input-stop" [value]="partida.resposta" [readOnly]="partida.finalizada" required>
+                <input class="form-control input-stop" [value]="partida.resposta" [readOnly]="partida.finalizada || bloqueiaCampos" required>
             </div>
         </div>
     </div>
     <div class="row align-items-center">
-        <button type="button" class="btn btn-stop">STOP</button>
+        <button type="button" class="btn btn-stop" (click)="stopPartida()">STOP</button>
     </div>
 </div>
 
