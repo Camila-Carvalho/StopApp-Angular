@@ -8,6 +8,9 @@ import { ROUTES } from './app.routes';
 import { AppComponent } from './app.component';
 import { ConfiguracaoComponent } from './configuracao/configuracao.component';
 import { JogoComponent } from './jogo/jogo.component';
+import { WebsocketService } from './services/websocket.service';
+import { ConfiguracaoService } from './configuracao/configuracao.service';
+import { JogoService } from './jogo/jogo.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +26,11 @@ import { JogoComponent } from './jogo/jogo.component';
   exports:[
     RouterModule
   ],
-  providers: [],
+  providers: [
+    ConfiguracaoService,
+    JogoService,
+    WebsocketService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
