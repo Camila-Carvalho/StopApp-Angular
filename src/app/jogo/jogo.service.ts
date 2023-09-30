@@ -9,7 +9,7 @@ import { SessionService } from '../services/session.service';
 
 @Injectable()
 export class JogoService {
-  private readonly API = URL_API + '/jogoService';
+  private readonly API = URL_API + '/jogo';
   
   constructor(
     private sessionService: SessionService,
