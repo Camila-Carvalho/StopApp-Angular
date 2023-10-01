@@ -1,0 +1,20 @@
+<div class="modal modal-loading" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}"></div>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="d-flex">
+                    <div class="spinner-grow text-danger" role="status" aria-hidden="true"></div>
+                    <h4> Aguarde</h4>
+                </div>
+            </div>
+            <div class="modal-body" *ngIf="tipoLoading === 'start'">
+                <h5 class="align-items-center">Codigo sala: {{codigoSala}}</h5>
+                <p class="align-items-center">Aguardando participantes</p>
+            </div>
+            <div class="modal-body" *ngIf="tipoLoading !== 'start'">
+                <h6 class="align-items-center">{{ mensagem }}</h6>
+            </div>
+        </div>
+    </div>
+</div>

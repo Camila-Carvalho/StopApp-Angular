@@ -16,8 +16,11 @@ export class JogoComponent implements OnInit {
   public segundosIniciar: number = 10;
   public jogo: Jogo = new Jogo;
   public letraPartida: string = "A";
+  public letraShowing: string = "-";
   public usuarioSala: UsuarioSala = new UsuarioSala();
-  public bloqueiaCampos: boolean = false;
+  public bloqueiaCampos: boolean = true;
+  public load: boolean = false;
+  private contagemStart: number = 10;
 
   constructor(
     private jogoService: JogoService,
@@ -28,12 +31,14 @@ export class JogoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.load = true;
     this.jogo = this.jogoService.jogoInit();
     //por enquanto que não tem a API pra buscar o jogo
     this.jogo = this.jogoService.adicionaPartidaJogo(this.jogo);
     //Conecta no websocket
     this.webSocketService.connect();
     this.recebeMensagem();
+    this.timeOutTeste();
   }
 
   recebeMensagem(){
@@ -43,7 +48,6 @@ export class JogoComponent implements OnInit {
         this.stopPartida();
       }
       if(mensagem === 'start'){
-        this.bloqueiaCampos = false;
         this.novaPartida();
       }
     });
@@ -58,6 +62,7 @@ export class JogoComponent implements OnInit {
       this.jogoService.startJogo(this.jogo).subscribe((ret: any) => {
         this.jogo = ret.jogo;
         this.letraPartida = ret.letra;
+        this.contagemMostraLetra();
       });
     }
   }
@@ -77,4 +82,22 @@ export class JogoComponent implements OnInit {
     this.router.navigateByUrl('/ranking');
   }
 
+  contagemMostraLetra(){
+    this.load = false;
+    setTimeout(() => { 
+      if(this.contagemStart > 0){
+        this.letraShowing = this.contagemStart.toString();
+        this.contagemStart--;
+        this.contagemMostraLetra();
+      }
+      else {
+        this.letraShowing = this.letraPartida;
+        this.bloqueiaCampos = false;
+      }
+    }, 1000);
+  }
+
+  timeOutTeste(){
+    setTimeout(() => { this.load = false; this.contagemMostraLetra(); }, 1000);
+  }
 }

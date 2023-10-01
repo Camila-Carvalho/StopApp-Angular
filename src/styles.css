@@ -110,3 +110,13 @@
     
     justify-content: center;
 }
+
+/*-------------------*/
+.modal-loading {
+    background-color: black;
+    opacity: 0.5;
+}
+
+.modal-dialog{
+    opacity: 1;
+}

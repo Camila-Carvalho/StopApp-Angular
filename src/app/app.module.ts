@@ -13,12 +13,14 @@ import { ConfiguracaoSalaService } from './sala/configuracao-sala.service';
 import { JogoService } from './jogo/jogo.service';
 import { SessionService } from './services/session.service';
 import { HttpClientModule } from '@angular/common/http';
+import { ModalLoadingComponent } from './modal-loading/modal-loading/modal-loading.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ConfiguracaoSalaComponent,
-    JogoComponent
+    JogoComponent,
+    ModalLoadingComponent,
   ],
   imports: [
     BrowserModule,
