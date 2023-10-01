@@ -38,6 +38,7 @@ export class JogoComponent implements OnInit {
     //Conecta no websocket
     this.webSocketService.connect();
     this.recebeMensagem();
+    //Enquanto não recebe a notificação e websocket, testei assim
     this.timeOutTeste();
   }
 
