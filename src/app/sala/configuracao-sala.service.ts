@@ -18,7 +18,7 @@ export class ConfiguracaoSalaService {
   }
 
   conectaNovaSala(sala: Sala): any {
-    return this.http.post<any>(this.API + 'newRoom', sala);
+    return this.http.post<any>(this.API + '/newRoom', sala);
     //Retorna a sala e o usuarioSala
   }
 }
