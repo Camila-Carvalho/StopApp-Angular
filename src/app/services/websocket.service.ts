@@ -10,6 +10,7 @@ export class WebsocketService {
   constructor() { }
 
   connect(): void {
+    //Necessário incluir o endereço conforme API
     this.socket = new WebSocket('wss://your-websocket-url');
 
     this.socket.onopen = () => {

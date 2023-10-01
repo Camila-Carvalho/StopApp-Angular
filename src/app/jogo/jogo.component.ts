@@ -99,6 +99,6 @@ export class JogoComponent implements OnInit {
   }
 
   timeOutTeste(){
-    setTimeout(() => { this.load = false; this.contagemMostraLetra(); }, 1000);
+    setTimeout(() => { this.load = false; this.contagemMostraLetra(); }, 4000);
   }
 }

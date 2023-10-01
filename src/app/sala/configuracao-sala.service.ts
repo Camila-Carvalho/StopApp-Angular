@@ -6,19 +6,19 @@ import { UsuarioSala } from './usuario-sala.model';
 
 @Injectable()
 export class ConfiguracaoSalaService {
-  private readonly API = URL_API + '/configuracaoSala';
+  private readonly API = URL_API + '/roomConfiguration';
 
   constructor(
     private http: HttpClient
   ) { }
 
   conectaSalaExistente(usuarioSala: UsuarioSala): any {
-    return this.http.post<any>(this.API + '/salaExistente', usuarioSala);
+    return this.http.post<any>(this.API + '/existingRoom', usuarioSala);
     //Retorna a sala e o usuarioSala
   }
 
   conectaNovaSala(sala: Sala): any {
-    return this.http.post<any>(this.API + 'novaSala', sala);
+    return this.http.post<any>(this.API + 'newRoom', sala);
     //Retorna a sala e o usuarioSala
   }
 }

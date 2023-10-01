@@ -4,11 +4,10 @@ import { Jogo } from './jogo.model';
 import { Partida } from './partida.model';
 import { URL_API } from '../app.api';
 import { HttpClient } from '@angular/common/http';
-import { SessionService } from '../services/session.service';
 
 @Injectable()
 export class JogoService {
-  private readonly API = URL_API + '/jogo';
+  private readonly API = URL_API + '/game';
   
   constructor(
     private http: HttpClient
@@ -16,12 +15,12 @@ export class JogoService {
 
   startJogo(jogo: Jogo): any {
     console.log("Envia requisição de START");
-    return this.http.post<Jogo>(this.API + '/startJogo', jogo);
+    return this.http.post<Jogo>(this.API + '/startGame', jogo);
   }
 
   stopJogo(jogo: Jogo){
     console.log("Envia requisição de STOP");
-    return this.http.put<Jogo>(this.API + '/stopJogo', jogo);
+    return this.http.post<Jogo>(this.API + '/stopGame', jogo);
   }
 
   jogoInit(): Jogo {
