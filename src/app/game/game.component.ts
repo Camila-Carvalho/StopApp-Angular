@@ -1,29 +1,29 @@
-import { Component, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
-import { Jogo } from './jogo.model';
-import { JogoService } from './jogo.service';
-import { Partida } from './partida.model';
+import { Component, OnInit } from '@angular/core';
 import { SessionService } from '../services/session.service';
-import { UsuarioSala } from '../sala/usuario-sala.model';
 import { Router } from '@angular/router';
 import { WebsocketService } from '../services/websocket.service';
+import { UserRoom } from '../model/userRoom.model';
+import { RoundGame } from '../model/roundGame.model';
+import { GameService } from '../services/game.service';
+import { UserRoundGame } from '../model/userRoundGame.model';
 
 @Component({
-  selector: 'app-jogo',
-  templateUrl: './jogo.component.html'
+  selector: 'app-game',
+  templateUrl: './game.component.html'
 })
-export class JogoComponent implements OnInit {
+export class GameComponent implements OnInit {
 
-  public segundosIniciar: number = 10;
-  public jogo: Jogo = new Jogo;
-  public letraPartida: string = "A";
-  public letraShowing: string = "-";
-  public usuarioSala: UsuarioSala = new UsuarioSala();
-  public bloqueiaCampos: boolean = true;
+  public letterRound: string = "A";
+  public letterShowing: string = "-";
+  public roundGame: RoundGame = new RoundGame();
+  public userRoundGame: UserRoundGame = new UserRoundGame();
+  public userRoom: UserRoom = new UserRoom();
+  public blockFields: boolean = true;
   public load: boolean = false;
-  private contagemStart: number = 10;
+  private countStart: number = 10;
 
   constructor(
-    private jogoService: JogoService,
+    private gameService: GameService,
     private sessionService: SessionService,
     private webSocketService: WebsocketService,
     private router: Router
@@ -32,9 +32,7 @@ export class JogoComponent implements OnInit {
 
   ngOnInit() {
     this.load = true;
-    this.jogo = this.jogoService.jogoInit();
-    //por enquanto que não tem a API pra buscar o jogo
-    this.jogo = this.jogoService.adicionaPartidaJogo(this.jogo);
+
     //Conecta no websocket
     this.webSocketService.connect();
     this.recebeMensagem();
@@ -45,7 +43,7 @@ export class JogoComponent implements OnInit {
   recebeMensagem(){
     this.webSocketService.messageReceived.subscribe((mensagem: any) => {
       if(mensagem === 'stop'){
-        this.bloqueiaCampos = true;
+        this.blockFields = true;
         this.stopPartida();
       }
       if(mensagem === 'start'){
@@ -56,25 +54,25 @@ export class JogoComponent implements OnInit {
 
   novaPartida(){
     //Verifica se é a última partida, se for vai pra tela de ranking
-    if(this.jogo.numeroPartidaAtual > this.jogo.numeroPartidas)
+    if(this.roundGame.numberRound > this.roundGame.numberOfRounds)//
       this.finalPartida();
     else{
       //Busca uma nova partida para o jogo, retorna um objeto com o id da partida e letra sorteada
-      this.jogoService.startJogo(this.jogo).subscribe((ret: any) => {
-        this.jogo = ret.jogo;
-        this.letraPartida = ret.letra;
+      this.gameService.startGame(this.roundGame).subscribe((ret: any) => {
+        this.roundGame = ret.roundGame;
+        this.letterRound = ret.letter;
         this.contagemMostraLetra();
       });
     }
   }
 
   stopPartida(){
-    this.bloqueiaCampos = true;
-    this.jogoService.stopJogo(this.jogo).subscribe((ret: any) => {
-      this.jogo = ret.jogo;
-      this.letraPartida = ret.letra;
+    this.blockFields = true;
+    this.gameService.stopGame(this.userRoundGame).subscribe((ret: any) => {
+      this.roundGame = ret.roundGame;
+      this.letterRound = ret.letra;
     }, e => {
-      this.bloqueiaCampos = false;
+      this.blockFields = false;
       console.log("Erro: ", e);
     });
   }
@@ -86,14 +84,14 @@ export class JogoComponent implements OnInit {
   contagemMostraLetra(){
     this.load = false;
     setTimeout(() => { 
-      if(this.contagemStart > 0){
-        this.letraShowing = this.contagemStart.toString();
-        this.contagemStart--;
+      if(this.countStart > 0){
+        this.letterShowing = this.countStart.toString();
+        this.countStart--;
         this.contagemMostraLetra();
       }
       else {
-        this.letraShowing = this.letraPartida;
-        this.bloqueiaCampos = false;
+        this.letterShowing = this.letterRound;
+        this.blockFields = false;
       }
     }, 1000);
   }

@@ -6,20 +6,20 @@ import { RouterModule } from '@angular/router';
 import { ROUTES } from './app.routes';
 
 import { AppComponent } from './app.component';
-import { ConfiguracaoSalaComponent } from './sala/configuracao-sala.component';
-import { JogoComponent } from './jogo/jogo.component';
 import { WebsocketService } from './services/websocket.service';
-import { ConfiguracaoSalaService } from './sala/configuracao-sala.service';
-import { JogoService } from './jogo/jogo.service';
 import { SessionService } from './services/session.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalLoadingComponent } from './modal-loading/modal-loading/modal-loading.component';
+import { RoomService } from './services/room.service';
+import { GameService } from './services/game.service';
+import { RoomComponent } from './room/room.component';
+import { GameComponent } from './game/game.component';
 
 @NgModule({
   declarations: [
+    GameComponent,
+    RoomComponent,
     AppComponent,
-    ConfiguracaoSalaComponent,
-    JogoComponent,
     ModalLoadingComponent,
   ],
   imports: [
@@ -32,8 +32,8 @@ import { ModalLoadingComponent } from './modal-loading/modal-loading/modal-loadi
     RouterModule
   ],
   providers: [
-    ConfiguracaoSalaService,
-    JogoService,
+    GameService,
+    RoomService,
     WebsocketService,
     SessionService
   ],

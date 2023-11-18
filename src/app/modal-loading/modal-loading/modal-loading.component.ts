@@ -9,7 +9,7 @@ export class ModalLoadingComponent implements OnInit {
   @Input() tipoLoading: string = "start";
   @Input() mensagem: string = "";
   public displayStyle = "none";
-  public codigoSala: string = "-";
+  public codeRoom: string = "-";
   
   constructor(
     private sessionService: SessionService
@@ -17,7 +17,7 @@ export class ModalLoadingComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.codigoSala = this.sessionService.getSalaLogado().codigoSala;
+    this.codeRoom = this.sessionService.getRoomLogged().codeRoom;
     this.openPopup();
   }
 

@@ -1,30 +1,30 @@
 import { Injectable } from '@angular/core';
-import { UsuarioSala } from '../sala/usuario-sala.model';
-import { Sala } from '../sala/sala.model';
+import { UserRoom } from '../model/userRoom.model';
+import { Room } from '../model/room.model';
 
 @Injectable()
 export class SessionService {
 
   constructor() { }
 
-  private usuarioSalaLogado: UsuarioSala = new UsuarioSala;
+  private userRoomLogged: UserRoom = new UserRoom;
 
-  getUsuarioSalaLogado(): UsuarioSala {
-    return this.usuarioSalaLogado;
+  getUserRoomLogged(): UserRoom {
+    return this.userRoomLogged;
   }
 
-  setUsuarioSalaLogado(usuarioSala: UsuarioSala) {
-    this.usuarioSalaLogado = usuarioSala;
+  setUserRoomLogged(userRoom: UserRoom) {
+    this.userRoomLogged = userRoom;
   }
 
-  private salaLogado: Sala = new Sala;
+  private roomLogged: Room = new Room;
 
-  getSalaLogado(): Sala {
-    return this.salaLogado;
+  getRoomLogged(): Room {
+    return this.roomLogged;
   }
 
-  setSalaLogado(sala: Sala) {
-    this.salaLogado = sala;
+  setRoomLogged(room: Room) {
+    this.roomLogged = room;
   }
 
 }

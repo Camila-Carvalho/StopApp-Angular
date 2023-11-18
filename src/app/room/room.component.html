@@ -1,0 +1,35 @@
+<div class="jumbotron">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!visibleButtonStartGame">
+        <h3>Olá! Vamos jogar..</h3>
+        <hr>
+        <div>
+            <a class="link-sala" (click)="defineTypeRoom('new')"> <i class="fa fa-plus"></i> Nova sala </a>
+            |
+            <a class="link-sala" (click)="defineTypeRoom('existing')"> <i class="fa fa-sign-in"></i> <span> Sala existente </span> </a>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="visibleButtonStartGame && typeRoom === 'new'">
+        <h3>Vamos criar uma nova sala!</h3>
+        <hr>
+        <label>Nome jogador</label>
+        <input class="form-control input-stop" type="text" [value]="room.playerNameCreator" placeholder="Nome do jogador">
+        <label>Número de participantes</label>
+        <input class="form-control input-stop" type="number" [value]="room.numberPlayers" placeholder="Número de participantes">
+        <label>Número de jogadas</label>
+        <input class="form-control input-stop" type="number" [value]="room.numberRounds" placeholder="Número de jogadas">
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="visibleButtonStartGame && typeRoom === 'existing'">
+        <h3>Vamos acessar uma sala!</h3>
+        <hr>
+        <label>Nome jogador</label>
+        <input class="form-control input-stop" type="text" [value]="userRoom.name" placeholder="Nome do jogador">
+        <label>Código sala</label>
+        <input class="form-control input-stop" type="text" [value]="userRoom.codeRoom" placeholder="Código da sala">
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="visibleButtonStartGame">
+        <button type="button" class="btn btn-start-game" (click)="startGame()">Iniciar jogo</button>
+    </div>
+</div>

@@ -1,17 +1,16 @@
 <app-modal-loading *ngIf="load"></app-modal-loading>
+
 <div class="form">
     <div class="row align-items-center">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 letra-partida-size-circle letra-partida-circle">
-            <h1>{{letraShowing}}</h1>
+            <h1>{{letterShowing}}</h1>
         </div>
     </div>
     <div class="row align-items-center">
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria" *ngFor="let categoria of jogo.categorias">
-            {{categoria.nome}}
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria" *ngFor="let answerCategory of userRoundGame.answers">
+            {{answerCategory.category}}
             <hr>
-            <div *ngFor="let partida of categoria.partidas">
-                <input class="form-control input-stop" [value]="partida.resposta" [readOnly]="partida.finalizada || bloqueiaCampos" required>
-            </div>
+            <input class="form-control input-stop" [value]="answerCategory.answer" required>
         </div>
     </div>
     <div class="row align-items-center">
