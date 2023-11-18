@@ -6,6 +6,7 @@ import { UserRoom } from '../model/userRoom.model';
 import { RoundGame } from '../model/roundGame.model';
 import { GameService } from '../services/game.service';
 import { UserRoundGame } from '../model/userRoundGame.model';
+import { Room } from '../model/room.model';
 
 @Component({
   selector: 'app-game',
@@ -18,6 +19,7 @@ export class GameComponent implements OnInit {
   public roundGame: RoundGame = new RoundGame();
   public userRoundGame: UserRoundGame = new UserRoundGame();
   public userRoom: UserRoom = new UserRoom();
+  public room: Room = new Room;
   public blockFields: boolean = true;
   public load: boolean = false;
   private countStart: number = 10;
@@ -32,12 +34,13 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     this.load = true;
-
+    this.room = this.sessionService.getRoomLogged();
+    this.userRoom = this.sessionService.getUserRoomLogged();
     //Conecta no websocket
     this.webSocketService.connect();
     this.recebeMensagem();
     //Enquanto não recebe a notificação e websocket, testei assim
-    this.timeOutTeste();
+    //this.timeOutIniciar();
   }
 
   recebeMensagem(){
@@ -97,8 +100,8 @@ export class GameComponent implements OnInit {
     }, 1000);
   }
 
-  timeOutTeste(){
-    setTimeout(() => { this.load = false; this.contagemMostraLetra(); }, 4000);
+  timeOutIniciar(){
+    setTimeout(() => { this.load = false; this.contagemMostraLetra(); }, 300000); // 300000 milissegundos = 5 minutos
   }
 
   onBlur(categoria: string, input: any){

@@ -51,7 +51,9 @@ export class RoomComponent implements OnInit {
 
   treatReturnConexao(ret: any){
     this.sessionService.setRoomLogged(ret.room);
-    this.sessionService.setUserRoomLogged(ret.userRoom);
+    this.sessionService.setUserRoomLogged(ret.user);
+    this.room = ret.room;
+    this.userRoom = ret.user;
     this.router.navigateByUrl('/game');
   }
 
