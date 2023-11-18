@@ -1,6 +1,6 @@
 export class User {
-  id: number | undefined;
-  name: string | undefined;
+  Id: number | undefined;
+  Name: string | undefined;
 
   constructor() {
   }

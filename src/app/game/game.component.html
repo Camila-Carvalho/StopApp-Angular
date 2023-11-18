@@ -7,10 +7,10 @@
         </div>
     </div>
     <div class="row align-items-center">
-        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria" *ngFor="let answerCategory of userRoundGame.answers">
-            {{answerCategory.category}}
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 coluna-categoria" *ngFor="let answerCategory of userRoundGame.Answers">
+            {{answerCategory.Category}}
             <hr>
-            <input class="form-control input-stop" [value]="answerCategory.answer" required>
+            <input class="form-control input-stop" required (blur)="onBlur(answerCategory.Category, $event)">
         </div>
     </div>
     <div class="row align-items-center">

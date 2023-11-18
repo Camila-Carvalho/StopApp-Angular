@@ -1,17 +1,17 @@
 import { AnswerCategory } from "./answerCategory.model";
 
 export class UserRoundGame {
-    id: number | undefined;
-    idRoundGame: number | undefined;
-    idUser: number | undefined;
-    answers: AnswerCategory[];
-    dateTimeStop: Date;
-    score: number;
+    Id: number | undefined;
+    IdRoundGame: number | undefined;
+    IdUser: number | undefined;
+    Answers: AnswerCategory[];
+    DateTimeStop: Date;
+    Score: number;
 
     constructor() {
-        this.answers = this.generateAnswerCategoryRound();
-        this.dateTimeStop = new Date();
-        this.score = 0;
+        this.Answers = this.generateAnswerCategoryRound();
+        this.DateTimeStop = new Date();
+        this.Score = 0;
     }
 
     

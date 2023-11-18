@@ -1,19 +1,19 @@
 export class RoundGame {
-    id: number | undefined;
-    idRoom: number | undefined;
-    numberRound: number;
-    numberOfRounds: number;
-    letter: string;
-    finished: boolean;
-    dateTimeInit: Date;
-    dateTimeEnd: Date;
+    Id: number | undefined;
+    IdRoom: number | undefined;
+    NumberRound: number;
+    NumberOfRounds: number;
+    Letter: string;
+    Finished: boolean;
+    DateTimeInit: Date;
+    DateTimeEnd: Date;
     
     constructor() {
-      this.numberRound = 1;
-      this.numberOfRounds = 1;
-      this.letter = "";
-      this.finished = false;
-      this.dateTimeInit = new Date();
-      this.dateTimeEnd = new Date();
+      this.NumberRound = 1;
+      this.NumberOfRounds = 1;
+      this.Letter = "";
+      this.Finished = false;
+      this.DateTimeInit = new Date();
+      this.DateTimeEnd = new Date();
     }
 }

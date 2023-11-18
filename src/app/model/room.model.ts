@@ -1,15 +1,15 @@
 export class Room {
-    id: number | undefined;
-    codeRoom: string
-    numberPlayers: number;
-    numberRounds: number;
-    playerNameCreator: string
+    Id: number | undefined;
+    CodeRoom: string
+    NumberPlayers: number;
+    NumberRounds: number;
+    PlayerNameCreator: string
 
     constructor() {
-      this.codeRoom = "";
-      this.playerNameCreator = "";
-      this.numberRounds = 1;
-      this.numberPlayers = 1;
+      this.CodeRoom = "";
+      this.PlayerNameCreator = "";
+      this.NumberRounds = 1;
+      this.NumberPlayers = 1;
     }
 
     public generateRandomCode(): string {

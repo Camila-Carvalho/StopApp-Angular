@@ -54,7 +54,7 @@ export class GameComponent implements OnInit {
 
   novaPartida(){
     //Verifica se é a última partida, se for vai pra tela de ranking
-    if(this.roundGame.numberRound > this.roundGame.numberOfRounds)//
+    if(this.roundGame.NumberRound > this.roundGame.NumberOfRounds)//
       this.finalPartida();
     else{
       //Busca uma nova partida para o jogo, retorna um objeto com o id da partida e letra sorteada
@@ -68,6 +68,7 @@ export class GameComponent implements OnInit {
 
   stopPartida(){
     this.blockFields = true;
+    console.log("Respostas", this.userRoundGame.Answers);
     this.gameService.stopGame(this.userRoundGame).subscribe((ret: any) => {
       this.roundGame = ret.roundGame;
       this.letterRound = ret.letra;
@@ -98,5 +99,9 @@ export class GameComponent implements OnInit {
 
   timeOutTeste(){
     setTimeout(() => { this.load = false; this.contagemMostraLetra(); }, 4000);
+  }
+
+  onBlur(categoria: string, input: any){
+    this.userRoundGame.Answers.forEach(answers => { if(answers.Category === categoria) answers.Answer = input.target.value });
   }
 }

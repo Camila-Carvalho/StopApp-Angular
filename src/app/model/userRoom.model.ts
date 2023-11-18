@@ -1,9 +1,9 @@
 export class UserRoom {
-    name: string;
-    codeRoom: string;
+    Name: string;
+    CodeRoom: string;
 
     constructor() {
-      this.name = "";
-      this.codeRoom = "";
+      this.Name = "";
+      this.CodeRoom = "";
     }
 }

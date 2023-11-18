@@ -13,20 +13,25 @@
         <h3>Vamos criar uma nova sala!</h3>
         <hr>
         <label>Nome jogador</label>
-        <input class="form-control input-stop" type="text" [value]="room.playerNameCreator" placeholder="Nome do jogador">
+        <input class="form-control input-stop" type="text" placeholder="Nome do jogador" (keyup)="onKey('playerNameCreator', $event)">
+        <!-- <input class="form-control" type="text" [value]="room.playerNameCreator" placeholder="Nome do jogador"> -->
         <label>Número de participantes</label>
-        <input class="form-control input-stop" type="number" [value]="room.numberPlayers" placeholder="Número de participantes">
+        <input class="form-control input-stop" type="number" placeholder="Número de participantes" (keyup)="onKey('numberPlayers', $event)">
+        <!-- <input class="form-control input-stop" type="number" [value]="numberPlayers" placeholder="Número de participantes"> -->
         <label>Número de jogadas</label>
-        <input class="form-control input-stop" type="number" [value]="room.numberRounds" placeholder="Número de jogadas">
+        <input class="form-control input-stop" type="number" placeholder="Número de jogadas" (keyup)="onKey('numberRounds', $event)">
+        <!-- <input class="form-control input-stop" type="number" [value]="numberRounds" placeholder="Número de jogadas"> -->
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="visibleButtonStartGame && typeRoom === 'existing'">
         <h3>Vamos acessar uma sala!</h3>
         <hr>
         <label>Nome jogador</label>
-        <input class="form-control input-stop" type="text" [value]="userRoom.name" placeholder="Nome do jogador">
+        <input class="form-control input-stop" type="text" placeholder="Nome do jogador" (keyup)="onKey('playerName', $event)">
+        <!-- <input class="form-control input-stop" type="text" [value]="playerNameCreator" placeholder="Nome do jogador"> -->
         <label>Código sala</label>
-        <input class="form-control input-stop" type="text" [value]="userRoom.codeRoom" placeholder="Código da sala">
+        <input class="form-control input-stop" type="text" placeholder="Código da sala" (keyup)="onKey('codeRoom', $event)">
+        <!-- <input class="form-control input-stop" type="text" [value]="codeRoom" placeholder="Código da sala"> -->
     </div>
 
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="visibleButtonStartGame">

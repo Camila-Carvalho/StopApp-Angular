@@ -1,9 +1,9 @@
 export class AnswerCategory {
-    category: string;
-    answer: string;
+    Category: string;
+    Answer: string;
   
     constructor(category: string) {
-        this.category = category;
-        this.answer = "";
+        this.Category = category;
+        this.Answer = "";
     }
   }

@@ -17,7 +17,7 @@ export class ModalLoadingComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.codeRoom = this.sessionService.getRoomLogged().codeRoom;
+    this.codeRoom = this.sessionService.getRoomLogged().CodeRoom;
     this.openPopup();
   }
 

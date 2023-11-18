@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SessionService } from '../services/session.service';
 import { UserRoom } from '../model/userRoom.model';
@@ -7,7 +7,7 @@ import { Room } from '../model/room.model';
 
 @Component({
   selector: 'app-room',
-  templateUrl: './room.component.html'
+  templateUrl: './room.component.html',
 })
 
 export class RoomComponent implements OnInit {
@@ -24,13 +24,10 @@ export class RoomComponent implements OnInit {
     private router: Router,
     private cdr: ChangeDetectorRef
   ){
-    console.log("Teste de inicialização do componente")
   }
 
   ngOnInit(): void {
-    console.log('Antes de detectChanges:', this.room.playerNameCreator);
   this.cdr.detectChanges();
-  console.log('Após detectChanges:', this.room.playerNameCreator);
   }
 
   defineTypeRoom(tipo: string){
@@ -40,7 +37,7 @@ export class RoomComponent implements OnInit {
 
   startGame(){
     if(this.typeRoom === 'new'){
-      this.room.codeRoom = this.room.generateRandomCode();
+      this.room.CodeRoom = this.room.generateRandomCode();
       this.roomService.connectNewRoom(this.room).subscribe((ret: any) => {
         this.treatReturnConexao(ret);
       });
@@ -50,14 +47,21 @@ export class RoomComponent implements OnInit {
         this.treatReturnConexao(ret);
       });
     }
-
-    console.log("Iniciou e foi pra rota");
-    this.router.navigateByUrl('/game');
   }
 
   treatReturnConexao(ret: any){
     this.sessionService.setRoomLogged(ret.room);
     this.sessionService.setUserRoomLogged(ret.userRoom);
     this.router.navigateByUrl('/game');
+  }
+
+  onKey(tipo: string, event: any){
+    switch(tipo){
+      case 'playerNameCreator': this.room.PlayerNameCreator = event.target.value; break;
+      case 'numberPlayers': this.room.NumberPlayers = event.target.value; break;
+      case 'numberRounds': this.room.NumberRounds = event.target.value; break;
+      case 'playerName': this.userRoom.Name = event.target.value; break;
+      case 'codeRoom': this.userRoom.CodeRoom = event.target.value; break;
+    }
   }
 }
