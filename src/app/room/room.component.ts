@@ -4,6 +4,7 @@ import { SessionService } from '../services/session.service';
 import { UserRoom } from '../model/userRoom.model';
 import { RoomService } from '../services/room.service';
 import { Room } from '../model/room.model';
+import { WebsocketService } from '../services/websocket.service';
 
 @Component({
   selector: 'app-room',
@@ -22,6 +23,7 @@ export class RoomComponent implements OnInit {
     private roomService: RoomService,
     private sessionService: SessionService,
     private router: Router,
+    private webSocketService: WebsocketService,
     private cdr: ChangeDetectorRef
   ){
   }
@@ -54,6 +56,9 @@ export class RoomComponent implements OnInit {
     this.sessionService.setUserRoomLogged(ret.user);
     this.room = ret.room;
     this.userRoom = ret.user;
+    console.log("Room:", this.room);
+    console.log("UserRoom:", this.userRoom);
+    this.webSocketService.updateUserConnection(this.userRoom);
     this.router.navigateByUrl('/game');
   }
 

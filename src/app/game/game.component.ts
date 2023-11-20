@@ -37,19 +37,24 @@ export class GameComponent implements OnInit {
     this.room = this.sessionService.getRoomLogged();
     this.userRoom = this.sessionService.getUserRoomLogged();
     //Conecta no websocket
-    this.webSocketService.connect();
+    this.webSocketService.connect(this.userRoom);
     this.recebeMensagem();
     //Enquanto não recebe a notificação e websocket, testei assim
     //this.timeOutIniciar();
   }
 
   recebeMensagem(){
-    this.webSocketService.messageReceived.subscribe((mensagem: any) => {
-      if(mensagem === 'stop'){
+    console.log("Entrou na função do game");
+    this.webSocketService.onMessage().subscribe((message: any) => { 
+      console.log("mensagem que voltou: ", message);
+      if(message === 'connectUser'){
+        this.webSocketService.updateUserConnection(this.userRoom);
+      }
+      if(message === 'stop'){
         this.blockFields = true;
         this.stopPartida();
       }
-      if(mensagem === 'start'){
+      if(message === 'start'){
         this.novaPartida();
       }
     });

@@ -1,46 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Socket, SocketIoConfig } from 'ngx-socket-io';  
+import { UserRoom } from '../model/userRoom.model';
+import { URL_API } from '../app.api';
+import { SessionService } from './session.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class WebsocketService {
 
-  public socket: WebSocket | undefined;
-  public messageReceived: Subject<string> = new Subject<string>();
+  constructor(
+    private socket: Socket,
+    private sessionService: SessionService,
+  ) {
+  }
 
-  constructor() { }
-
-  connect(): void {
-    //Necessário incluir o endereço conforme API
-    this.socket = new WebSocket('wss://your-websocket-url');
-
-    this.socket.onopen = () => {
-      console.log('WebSocket connection established.');
-    };
-
-    this.socket.onmessage = (event) => {
-      const message = event.data;
-      console.log('Received message:', message);
-      this.messageReceived.next(message);
-    };
-
-    this.socket.onclose = (event) => {
-      console.log('WebSocket connection closed:', event);
-    };
-
-    this.socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+  connect(userRoom: UserRoom): void {
+    this.socket.connect();
+    this.socket.emit('connection');
+    this.socket.emit('connectionUser', userRoom);
+    this.sendMessage("Teste enviando mensagem");
   }
 
   sendMessage(message: string): void {
-    console.log("Enviando a mensagem:", message);
-    if(this.socket != undefined)
-      this.socket.send(message);
+    this.socket.emit('message', message);
+  }
+
+  updateUserConnection(userRoom: UserRoom){
+    this.socket.emit('connectionUser', userRoom);
+  }
+
+  // Método para ouvir mensagens do servidor WebSocket
+  onMessage(): any {
+    return this.socket.fromEvent('message');
   }
 
   closeConnection(): void {
-    console.log("Fechando a conexão do webSocket");
-    if(this.socket != undefined)
-      this.socket.close();
+    this.socket.emit('disconnect');
+    this.socket.disconnect('disconnect');
   }
 }
