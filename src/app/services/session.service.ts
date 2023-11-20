@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserRoom } from '../model/userRoom.model';
 import { Room } from '../model/room.model';
+import { RoundGame } from '../model/roundGame.model';
 
 @Injectable()
 export class SessionService {
@@ -27,4 +28,12 @@ export class SessionService {
     this.roomLogged = room;
   }
 
+  private roundGame: RoundGame = new RoundGame;
+  getRoundGame(): RoundGame {
+    return this.roundGame;
+  }
+
+  setRoundGame(roundGame: RoundGame) {
+    this.roundGame = roundGame;
+  }
 }

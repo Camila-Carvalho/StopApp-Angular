@@ -54,11 +54,11 @@ export class RoomComponent implements OnInit {
   treatReturnConexao(ret: any){
     this.sessionService.setRoomLogged(ret.room);
     this.sessionService.setUserRoomLogged(ret.user);
-    this.room = ret.room;
     this.userRoom = ret.user;
-    console.log("Room:", this.room);
-    console.log("UserRoom:", this.userRoom);
     this.webSocketService.updateUserConnection(this.userRoom);
+    if(ret.startGame){
+      this.webSocketService.sendMessage('start');
+    }
     this.router.navigateByUrl('/game');
   }
 

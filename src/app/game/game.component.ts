@@ -23,6 +23,7 @@ export class GameComponent implements OnInit {
   public blockFields: boolean = true;
   public load: boolean = false;
   private countStart: number = 10;
+  private gameGoingOn: boolean = false;
 
   constructor(
     private gameService: GameService,
@@ -47,28 +48,35 @@ export class GameComponent implements OnInit {
     console.log("Entrou na função do game");
     this.webSocketService.onMessage().subscribe((message: any) => { 
       console.log("mensagem que voltou: ", message);
-      if(message === 'connectUser'){
-        this.webSocketService.updateUserConnection(this.userRoom);
-      }
-      if(message === 'stop'){
-        this.blockFields = true;
-        this.stopPartida();
-      }
-      if(message === 'start'){
-        this.novaPartida();
+      if(message.CodeRoom === this.room.CodeRoom){
+        if(message.Message === 'connectUser'){
+          this.webSocketService.updateUserConnection(this.userRoom);
+        }
+        if(message.Message === 'stop' && this.gameGoingOn){
+          this.blockFields = true;
+          this.stopPartida();
+        }
+        if(message.Message === 'start' && !this.gameGoingOn){
+          this.novaPartida();
+        }
       }
     });
   }
 
   novaPartida(){
+    console.log("Veio iniciar uma partida");
     //Verifica se é a última partida, se for vai pra tela de ranking
     if(this.roundGame.NumberRound > this.roundGame.NumberOfRounds)//
       this.finalPartida();
     else{
       //Busca uma nova partida para o jogo, retorna um objeto com o id da partida e letra sorteada
-      this.gameService.startGame(this.roundGame).subscribe((ret: any) => {
+      if(!this.room.Id)
+        return;
+      
+      this.gameService.startGame(this.room.Id).subscribe((ret: any) => {
+        console.log("Retorno start: ", ret);
         this.roundGame = ret.roundGame;
-        this.letterRound = ret.letter;
+        this.letterRound = this.roundGame.Letter;
         this.contagemMostraLetra();
       });
     }
@@ -77,6 +85,7 @@ export class GameComponent implements OnInit {
   stopPartida(){
     this.blockFields = true;
     console.log("Respostas", this.userRoundGame.Answers);
+    this.webSocketService.sendMessage("stop");
     this.gameService.stopGame(this.userRoundGame).subscribe((ret: any) => {
       this.roundGame = ret.roundGame;
       this.letterRound = ret.letra;

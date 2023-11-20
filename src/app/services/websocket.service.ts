@@ -4,6 +4,7 @@ import { UserRoom } from '../model/userRoom.model';
 import { URL_API } from '../app.api';
 import { SessionService } from './session.service';
 import { Observable } from 'rxjs';
+import { MessageWebSocket } from '../model/messageWebSocket.model';
 
 @Injectable()
 export class WebsocketService {
@@ -22,7 +23,10 @@ export class WebsocketService {
   }
 
   sendMessage(message: string): void {
-    this.socket.emit('message', message);
+    let socketMessage = new MessageWebSocket;
+    socketMessage.CodeRoom = this.sessionService.getRoomLogged().CodeRoom;
+    socketMessage.Message = message;
+    this.socket.emit('message', socketMessage);
   }
 
   updateUserConnection(userRoom: UserRoom){
