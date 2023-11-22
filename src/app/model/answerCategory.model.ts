@@ -1,4 +1,5 @@
 export class AnswerCategory {
+    IdUserRoundGame: string | undefined;
     Category: string;
     Answer: string;
   

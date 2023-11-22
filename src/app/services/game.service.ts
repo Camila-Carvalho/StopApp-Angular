@@ -13,6 +13,10 @@ export class GameService {
     private http: HttpClient
   ) { }
 
+  createOrUpdateRound(codeRoom: string){
+    return this.http.post<any>(this.API + '/startGame/createOrUpdateRound/' + codeRoom, null);
+  }
+
   startGame(idRoom: number): any {
     console.log("Envia requisição de START");
     return this.http.get<any>(this.API + '/getRoundGame/' + idRoom.toString());
@@ -23,23 +27,4 @@ export class GameService {
     console.log("Envia requisição de STOP");
     return this.http.post<any>(this.API + '/stopGame', userRoundGame);
   }
-
-/*
-  jogoInit(): Jogo {
-    let jogo = new Jogo();
-    jogo.categorias = this.categoriasInit();
-    return jogo;
-  }*/
-/*
-  //Para quando não se tem a API ainda
-  adicionaPartidaJogo(jogo: Jogo): Jogo {
-    let ultimaPartida = jogo.categorias[0].partidas[jogo.categorias[0].partidas.length - 1];
-    let partida = new Partida();
-    if(ultimaPartida !== undefined)
-      partida.id = ultimaPartida.id++;
-    partida.letra = "A";
-
-    jogo.categorias.forEach(categoria => { categoria.partidas.push(partida); });
-    return jogo;
-  }*/
 }

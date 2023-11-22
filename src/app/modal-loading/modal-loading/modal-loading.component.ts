@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { GameService } from 'src/app/services/game.service';
 import { SessionService } from 'src/app/services/session.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-modal-loading',
@@ -12,7 +14,9 @@ export class ModalLoadingComponent implements OnInit {
   public codeRoom: string = "-";
   
   constructor(
-    private sessionService: SessionService
+    private gameService: GameService,
+    private sessionService: SessionService,
+    private webSocketService: WebsocketService,
   ){
   }
 
@@ -27,5 +31,15 @@ export class ModalLoadingComponent implements OnInit {
   
   closePopup() {
     this.displayStyle = "none";
+  }
+
+  notifyNewRound(){
+    //Manda criar nova rodada
+    this.gameService.createOrUpdateRound(this.codeRoom).subscribe(retorno => {
+      if(retorno && !retorno.Finished)
+        this.webSocketService.sendMessage('start');
+      if(retorno && retorno.Finished)
+        this.webSocketService.sendMessage('ranking');
+    });
   }
 }

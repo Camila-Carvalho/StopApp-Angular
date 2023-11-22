@@ -15,7 +15,7 @@ export class UserRoundGame {
     }
 
     
-    private generateAnswerCategoryRound () : AnswerCategory[] {
+    public generateAnswerCategoryRound () : AnswerCategory[] {
         let answerCategory: AnswerCategory[] = [];
         answerCategory.push(new AnswerCategory("Nome"));
         answerCategory.push(new AnswerCategory("Cor"));

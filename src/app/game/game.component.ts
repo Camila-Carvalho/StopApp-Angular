@@ -24,6 +24,11 @@ export class GameComponent implements OnInit {
   public load: boolean = false;
   private countStart: number = 10;
   private gameGoingOn: boolean = false;
+  public modalStop: boolean = false;
+  public messageModalStop: string = "Botão STOP acionado!";
+  public tipoLoading: string = "stop";
+  public clicouStop: boolean = false;
+  public playerCreator: boolean = false;
 
   constructor(
     private gameService: GameService,
@@ -42,6 +47,10 @@ export class GameComponent implements OnInit {
     this.recebeMensagem();
     //Enquanto não recebe a notificação e websocket, testei assim
     //this.timeOutIniciar();
+    if(this.room.PlayerNameCreator === this.userRoom.Name){
+      this.playerCreator = true;
+      this.tipoLoading = "playerCreator";
+    }
   }
 
   recebeMensagem(){
@@ -54,41 +63,63 @@ export class GameComponent implements OnInit {
         }
         if(message.Message === 'stop' && this.gameGoingOn){
           this.blockFields = true;
-          this.stopPartida();
+          if(!this.clicouStop){
+            const dataAtual = new Date();
+            this.userRoundGame.DateTimeStop = new Date(dataAtual.setSeconds(dataAtual.getSeconds() + 1));
+          }
+          this.enviaRespostas();
         }
         if(message.Message === 'start' && !this.gameGoingOn){
           this.novaPartida();
+        }
+        if(message.Message === 'ranking'){
+          this.finalPartida();
         }
       }
     });
   }
 
-  novaPartida(){
-    console.log("Veio iniciar uma partida");
-    //Verifica se é a última partida, se for vai pra tela de ranking
-    if(this.roundGame.NumberRound > this.roundGame.NumberOfRounds)//
-      this.finalPartida();
-    else{
-      //Busca uma nova partida para o jogo, retorna um objeto com o id da partida e letra sorteada
-      if(!this.room.Id)
-        return;
-      
-      this.gameService.startGame(this.room.Id).subscribe((ret: any) => {
-        console.log("Retorno start: ", ret);
-        this.roundGame = ret.roundGame;
-        this.letterRound = this.roundGame.Letter;
-        this.contagemMostraLetra();
-      });
-    }
-  }
-
   stopPartida(){
     this.blockFields = true;
-    console.log("Respostas", this.userRoundGame.Answers);
+    this.modalStop = true;
+    this.clicouStop = true;
+    this.userRoundGame.DateTimeStop = new Date();
+    //Envia a mensagem de stop
     this.webSocketService.sendMessage("stop");
+  }
+
+  novaPartida(){
+    //Busca uma nova partida para o jogo, retorna um objeto com o id da partida e letra sorteada
+    if(!this.room.Id)
+      return;
+    
+    this.gameService.startGame(this.room.Id).subscribe((ret: any) => {
+      console.log("No start: ", ret.roundGame);
+      this.roundGame = ret.roundGame;
+      if(this.roundGame.Finished){
+        this.load = false;
+        this.modalStop = false;
+        this.finalPartida();
+      }
+      else{
+        this.userRoundGame.Answers = this.userRoundGame.generateAnswerCategoryRound();
+        this.letterRound = ret.roundGame.Letter;
+        this.gameGoingOn = true;
+        this.contagemMostraLetra();
+      }
+    });
+  }
+
+  enviaRespostas(){
+    this.blockFields = true;
+    if(!this.modalStop)
+      this.modalStop = true;
+    this.userRoundGame.IdRoundGame = this.roundGame.Id;
+    this.userRoundGame.IdUser = this.sessionService.getUserRoomLogged().Id;
+    this.gameGoingOn = false;
     this.gameService.stopGame(this.userRoundGame).subscribe((ret: any) => {
       this.roundGame = ret.roundGame;
-      this.letterRound = ret.letra;
+      this.userRoundGame.Answers = this.userRoundGame.generateAnswerCategoryRound();
     }, e => {
       this.blockFields = false;
       console.log("Erro: ", e);
@@ -96,11 +127,13 @@ export class GameComponent implements OnInit {
   }
 
   finalPartida(){
+    this.modalStop = false;
     this.router.navigateByUrl('/ranking');
   }
 
   contagemMostraLetra(){
     this.load = false;
+    this.modalStop = false;
     setTimeout(() => { 
       if(this.countStart > 0){
         this.letterShowing = this.countStart.toString();
