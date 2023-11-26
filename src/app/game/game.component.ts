@@ -28,7 +28,6 @@ export class GameComponent implements OnInit {
   public messageModalStop: string = "Botão STOP acionado!";
   public tipoLoading: string = "stop";
   public clicouStop: boolean = false;
-  public playerCreator: boolean = false;
 
   constructor(
     private gameService: GameService,
@@ -47,10 +46,6 @@ export class GameComponent implements OnInit {
     this.recebeMensagem();
     //Enquanto não recebe a notificação e websocket, testei assim
     //this.timeOutIniciar();
-    if(this.room.PlayerNameCreator === this.userRoom.Name){
-      this.playerCreator = true;
-      this.tipoLoading = "playerCreator";
-    }
   }
 
   recebeMensagem(){
@@ -69,6 +64,7 @@ export class GameComponent implements OnInit {
           }
           this.enviaRespostas();
         }
+        console.log("Jogo acontecendo?", this.gameGoingOn);
         if(message.Message === 'start' && !this.gameGoingOn){
           this.novaPartida();
         }
@@ -92,19 +88,19 @@ export class GameComponent implements OnInit {
     //Busca uma nova partida para o jogo, retorna um objeto com o id da partida e letra sorteada
     if(!this.room.Id)
       return;
-    
-    this.gameService.startGame(this.room.Id).subscribe((ret: any) => {
-      console.log("No start: ", ret.roundGame);
+    this.gameService.getRoundGame(this.room.CodeRoom).subscribe((ret: any) => {
       this.roundGame = ret.roundGame;
-      if(this.roundGame.Finished){
+      if(!this.roundGame || this.roundGame.Finished){
         this.load = false;
         this.modalStop = false;
         this.finalPartida();
       }
       else{
         this.userRoundGame.Answers = this.userRoundGame.generateAnswerCategoryRound();
+        this.letterShowing = "-";
         this.letterRound = ret.roundGame.Letter;
         this.gameGoingOn = true;
+        this.countStart = 10;
         this.contagemMostraLetra();
       }
     });
@@ -128,7 +124,8 @@ export class GameComponent implements OnInit {
 
   finalPartida(){
     this.modalStop = false;
-    this.router.navigateByUrl('/ranking');
+    this.router.navigateByUrl('/');
+    //this.router.navigateByUrl('/ranking');
   }
 
   contagemMostraLetra(){

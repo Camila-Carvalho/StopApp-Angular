@@ -12,14 +12,11 @@
                 <h5 class="align-items-center">Codigo sala: {{codeRoom}}</h5>
                 <p class="align-items-center">Aguardando participantes</p>
             </div>
-            <div class="modal-body" *ngIf="tipoLoading === 'playerCreator'">
+            <div class="modal-body" *ngIf="tipoLoading !== 'start'">
                 <h6 class="align-items-center">{{ mensagem }}</h6>
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <button type="button" class="btn btn-start-game" (click)="notifyNewRound()">Nova rodada / Ranking</button>
-                </div>
             </div>
-            <div class="modal-body" *ngIf="tipoLoading !== 'start' && tipoLoading !== 'playerCreator'">
-                <h6 class="align-items-center">{{ mensagem }}</h6>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 modal-body" *ngIf="playerCreator">
+                <button type="button" class="btn btn-start-game" (click)="notifyNewRound()">Nova rodada / Ranking</button>
             </div>
         </div>
     </div>

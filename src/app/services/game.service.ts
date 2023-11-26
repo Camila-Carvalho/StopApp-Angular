@@ -13,15 +13,16 @@ export class GameService {
     private http: HttpClient
   ) { }
 
-  createOrUpdateRound(codeRoom: string){
-    return this.http.post<any>(this.API + '/startGame/createOrUpdateRound/' + codeRoom, null);
+  getRoundGame(codeRoom: string){
+    return this.http.post<any>(this.API + '/startGame/getRoundGame/' + codeRoom, null);
   }
-
+  
+  /*
   startGame(idRoom: number): any {
     console.log("Envia requisição de START");
     return this.http.get<any>(this.API + '/getRoundGame/' + idRoom.toString());
     //return this.http.post<any>(this.API + '/startGame', game);
-  }
+  }*/
 
   stopGame(userRoundGame: UserRoundGame){
     console.log("Envia requisição de STOP");

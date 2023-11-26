@@ -12,6 +12,7 @@ export class ModalLoadingComponent implements OnInit {
   @Input() mensagem: string = "";
   public displayStyle = "none";
   public codeRoom: string = "-";
+  public playerCreator: boolean = false;
   
   constructor(
     private gameService: GameService,
@@ -21,7 +22,12 @@ export class ModalLoadingComponent implements OnInit {
   }
 
   ngOnInit(){
-    this.codeRoom = this.sessionService.getRoomLogged().CodeRoom;
+    let room = this.sessionService.getRoomLogged();
+    let userRoom = this.sessionService.getUserRoomLogged();
+    this.codeRoom = room.CodeRoom;
+    if(room.PlayerNameCreator === userRoom.Name){
+      this.playerCreator = true;
+    }
     this.openPopup();
   }
 
@@ -35,11 +41,7 @@ export class ModalLoadingComponent implements OnInit {
 
   notifyNewRound(){
     //Manda criar nova rodada
-    this.gameService.createOrUpdateRound(this.codeRoom).subscribe(retorno => {
-      if(retorno && !retorno.Finished)
-        this.webSocketService.sendMessage('start');
-      if(retorno && retorno.Finished)
-        this.webSocketService.sendMessage('ranking');
-    });
+    console.log("Veio aqui no modal pra enviar mensagem");
+    this.webSocketService.sendMessage('start');
   }
 }
