@@ -1,5 +1,5 @@
 <app-modal-loading *ngIf="load"></app-modal-loading>
-<app-modal-loading [mensagem]="messageModalStop" *ngIf="modalStop"></app-modal-loading>
+<app-modal-loading [mensagem]="messageModalStop" (buttomModal)="notifyNewRound($event)" *ngIf="modalStop"></app-modal-loading>
 
 <div class="form">
     <div class="row align-items-center">
@@ -15,7 +15,6 @@
         </div>
     </div>
     <div class="row align-items-center">
-        <button type="button" class="btn btn-stop" (click)="stopPartida()">STOP</button>
+        <button type="button" class="btn btn-stop" (click)="clickButtonStop()">STOP</button>
     </div>
 </div>
-

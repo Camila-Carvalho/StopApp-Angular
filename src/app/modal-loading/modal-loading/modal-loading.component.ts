@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { GameService } from 'src/app/services/game.service';
 import { SessionService } from 'src/app/services/session.service';
 import { WebsocketService } from 'src/app/services/websocket.service';
@@ -8,6 +8,7 @@ import { WebsocketService } from 'src/app/services/websocket.service';
   templateUrl: './modal-loading.component.html'
 })
 export class ModalLoadingComponent implements OnInit {
+  @Output() buttomModal = new EventEmitter<boolean>();
   @Input() tipoLoading: string = "start";
   @Input() mensagem: string = "";
   public displayStyle = "none";
@@ -43,5 +44,6 @@ export class ModalLoadingComponent implements OnInit {
     //Manda criar nova rodada
     console.log("Veio aqui no modal pra enviar mensagem");
     this.webSocketService.sendMessage('start');
+    this.buttomModal.emit(true);
   }
 }
